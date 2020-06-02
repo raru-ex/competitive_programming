@@ -1,5 +1,3 @@
-import scala.annotation.tailrec
-
 object Solution extends App {
 
   // twoSum(Array(2, 7, 11, 15), 9)
