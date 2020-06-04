@@ -1,7 +1,7 @@
 // package ABC044
 
 // n!の計算
-object A extends App {
+object Main extends App {
   // val inputs: Seq[String] = scala.io.Source.stdin.getLines().toList
   val inputs = Seq("3","4","2")
   val a = inputs(0).toInt
