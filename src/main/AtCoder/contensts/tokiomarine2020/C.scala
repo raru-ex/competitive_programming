@@ -1,4 +1,4 @@
-// TLE: 処理時間がかかりすぎている
+// TLE: 処理時間がかかりすぎている。累積和とかimos法というのがあるらしい
 object Main extends App {
   // val inputs: Seq[String] = scala.io.Source.stdin.getLines().toList
   val inputs = Seq("5 2", "1 0 0 1 0")
@@ -6,32 +6,47 @@ object Main extends App {
   val nums = inputs(0).split(" ").map(_.toInt)
   val n = nums(0)
   val k = nums(1)
-  val ramps = inputs(1).split(" ").map(_.toInt)
+  val lamps = inputs(1).split(" ").map(_.toInt)
 
-  println(solve(k, ramps))
 
-  private def solve(k: Int, ramps: Seq[Int]): String = {
-    val size = ramps.size
+  println(solve(n, k, lamps))
+
+  private def solve(n: Int, k: Int, lamps: Seq[Int]): String = {
     var currentPower = scala.collection.mutable.ArrayBuffer.empty[Int]
-    ramps.foreach{v =>
-        currentPower.append(v)
+    lamps.foreach { v =>
+      currentPower.append(v)
     }
 
-    (1 to k).foreach{ _ =>
-      val nextPower = scala.collection.mutable.ArrayBuffer.fill(ramps.size)(0)
+    (1 to k).foreach { _ =>
 
-      (0 until size).foreach { i =>
-        val light = currentPower(i)
-        val range = Range.inclusive(Math.max(0, i - light), Math.min(i + light, size - 1), 1)
-        println(range.toString)
+      // 範囲初期化
+      val range = scala.collection.mutable.ArrayBuffer.fill(n + 1)(0)
+      // 要素を走査
+      (0 until n).foreach { i =>
+        val power = currentPower(i)
 
-        range.foreach { j =>
-          nextPower.update(j, nextPower(j) + 1)
-        }
+        // 開始、終了を挟み込み
+        val left = Math.max(0, i - power)
+        val right = Math.min(i + power + 1, n)
+
+        range.update(left,  range(left) + 1)
+        range.update(right, range(right) - 1)
       }
-      currentPower = nextPower.clone()
-      println(s"""now => ${currentPower}""")
+      // 累積和を計算
+      (1 to n).foreach { i =>
+        range.update(i, range(i - 1) + range(i))
+      }
+      // 末端が余分なので削除して次の光として保持
+      val nextPower = range.dropRight(1)
+
+      // 全体が最高に光ってたら終了
+      if (nextPower == currentPower) {
+        return currentPower.mkString(" ")
+      }
+
+      // 次の光を保持
+      currentPower = nextPower
     }
-    currentPower.toSeq.mkString(" ")
+    currentPower.mkString(" ")
   }
 }
