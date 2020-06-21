@@ -7,6 +7,7 @@ object Main extends App {
 
   println(solve(n, m, images))
 
+  // m画像の左上を比較し、一致する場合に行ごとに分割して文字列比較している
   private def solve(n: Int, m: Int, images: Seq[String]): String = {
     val loopEnd = n - m
     val imagesTup = images.splitAt(n)
@@ -21,6 +22,7 @@ object Main extends App {
         if(line(j) == checkStart) {
           var ok = true
           (0 until m).foreach { k =>
+            // n画像のうち、必要な領域だけ抜き出している
             val checkLine = images(i + k).splitAt(j)._2.splitAt(m)._1
             if( checkLine != mImage(k)) {
               ok = false

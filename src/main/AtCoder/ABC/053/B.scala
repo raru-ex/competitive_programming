@@ -7,6 +7,9 @@ object Main extends App {
 
   println(solve(s))
 
+  // 両端から探して左はA,右はZが最初に出た位置を記録
+  // 両方が更新されたら、そのときの文字長をとって終わり
+  // 必ずA-Zになるという前提があるため、loopの外ではなんとなく-1をreturn
   private def solve(s: String): Int = {
     var aIndex = -1
     var zIndex = -1
