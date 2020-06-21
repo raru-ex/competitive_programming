@@ -1,4 +1,3 @@
-// TLE
 object Main extends App {
   val inputs: Seq[String] = scala.io.Source.stdin.getLines().toList
   val size = inputs(0).toInt
@@ -9,22 +8,29 @@ object Main extends App {
   solve(size, startNums, q, bi)
 
   def solve(size: Int, startNums: Seq[Int], q: Int, bi: Seq[String]): Unit = {
-    val array = scala.collection.mutable.ArrayBuffer.empty[Int]
+    val array = scala.collection.mutable.HashMap.empty[Int, Int]
+    // Longにしないとオーバーフローする
+    var sum = 0L
     startNums.foreach { v =>
-      array.append(v)
+      sum = sum + v
+      array.update(v, array.applyOrElse(v, (n: Int) => 0) + 1)
     }
 
     // 最終的に数字が何になるのかだけ処理する
     bi.foreach { str =>
       val set = str.split(" ").map(_.toInt)
       val from = set(0)
-      val to = set(1)
-      (0 until size).foreach { i =>
-        if(from == array(i)) {
-          array.update(i, to)
-        }
+      val to   = set(1)
+      var diff = 0L
+
+      if(array.isDefinedAt(from)) {
+        diff = (to - from) * array(from)
+        array.update(to, array.applyOrElse(to, (n: Int) => 0) + array(from))
+        array.remove(from)
       }
-      println(array.sum)
+      sum = sum + diff
+
+      println(sum)
     }
   }
 }
