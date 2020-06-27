@@ -1,4 +1,3 @@
-// time out
 object Main extends App {
   val inputs: Seq[String] = scala.io.Source.stdin.getLines().toList
   val n = inputs.head.toInt
@@ -6,28 +5,17 @@ object Main extends App {
   println(solve(n))
 
   def solve(n: Int): Long = {
-    var sum = 0L
+    val nums = scala.collection.mutable.ArrayBuffer.fill(0)(n+1)
+    var ans = 0L
+
     (1 to n).foreach { i =>
-      sum = sum + i * f(i)
+      ans = ans + i * sumAll(n/i)
     }
-    return sum
+
+    return ans
   }
 
-  private def f(n: Int): Int = {
-    var count = 0
-    var i = 1
-    while(i * i <= n){
-      if (n % i == 0) {
-        count = count + 1
-
-        if(i != n / i) {
-          count = count + 1
-        }
-      }
-
-      i = i + 1
-    }
-
-    return count
+  private def sumAll(n: Int): Long = {
+    (n * (n + 1L)) / 2
   }
 }

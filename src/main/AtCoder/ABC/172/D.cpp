@@ -10,20 +10,13 @@ int main()
 {
   int N;
   cin >> N;
+  ll ans = 0;
 
-  ll result = 0;
-  for(int j = 1; j <= N; j++) {
-
-    int count = 0;
-    for (ll i = 1; i * i <= j; ++i) {
-      if (j % i == 0) {
-        count++;
-        if (j/i != i) count++;
-      }
+  for(int i = 1; i <= N; i++) {
+    for(int j = 1; j <= N; j++) {
+      if (i % j == 0) ans += i;
     }
-
-    result = j * count;
   }
 
-  cout << result << endl;
+  cout << ans << endl;
 }
