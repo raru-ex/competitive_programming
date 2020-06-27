@@ -1,3 +1,4 @@
+// time out
 #include <bits/stdc++.h>
 #define REP(i, n) for(int i = 0; i < n; i++)
 #define REPR(i, n) for(int i = n; i >= 0; i--)
@@ -13,8 +14,8 @@ int main()
   ll ans = 0;
 
   for(int i = 1; i <= N; i++) {
-    for(int j = 1; j <= N; j++) {
-      if (i % j == 0) ans += i;
+    for(int j = i; j <= N; j += i) {
+      ans += j;
     }
   }
 

@@ -8,13 +8,12 @@ object Main extends App {
     var ans = 0L
 
     (1 to n).foreach { i =>
-      ans = ans + i * sumAll(n/i)
+      (i to n by i).foreach { j =>
+        ans = ans + j
+      }
     }
 
     return ans
   }
-
-  private def sumAll(n: Int): Long = {
-    (n * (n + 1L)) / 2
-  }
 }
+
