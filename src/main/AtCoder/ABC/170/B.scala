@@ -1,4 +1,3 @@
-
 object Main extends App {
   // val inputs: Seq[String] = scala.io.Source.stdin.getLines().toList
   val inputs = Seq("3 10")
