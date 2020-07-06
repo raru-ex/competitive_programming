@@ -11,11 +11,12 @@ object Main extends App {
     var comfort = 0L
     var currentMinNum  = 0
     val sortedNums = nums.sorted
+    val lastIndex  = n - 1
     var times = 1
 
-    Range.inclusive(n - 1, 0, -1).foreach { i =>
+    Range.inclusive(lastIndex, 0, -1).foreach { i =>
       comfort = comfort + currentMinNum
-      currentMinNum = sortedNums(i/2)
+      currentMinNum = sortedNums(lastIndex - (times/2))
       times = times + 1
     }
     comfort
